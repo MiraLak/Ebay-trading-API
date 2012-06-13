@@ -5,6 +5,7 @@ import java.io.IOException;
 import com.ebay.sdk.ApiContext;
 import com.ebay.sdk.ApiCredential;
 import com.ebay.sdk.call.AddItemCall;
+import com.ebay.sdk.call.ReviseItemCall;
 import com.ebay.sdk.helper.ConsoleUtil;
 import com.ebay.sdk.util.eBayUtil;
 import com.ebay.soap.eBLBaseComponents.AmountType;
@@ -173,8 +174,21 @@ public class ApplicationAddItem {
 			System.out.println("Listing fee is: " + new Double(listingFee).toString());
 			System.out.println("Listed Item ID: " + item.getItemID());
 
-			// [Step 5] Update item.
-			// FeesType feesUpdate =
+			// [Step 5] Update an item.
+			System.out.println("===== [4] Update item descrition and execute the API call ====");
+			ReviseItemCall revise = new ReviseItemCall(apiContext);
+			item.setDescription("my updated description");
+			revise.setItemToBeRevised(item);
+			revise.reviseItem();
+
+			// [Setp 6] Display results.
+			System.out.println("The item was updated successfully!");
+			double listingFee2 = eBayUtil.findFeeByName(fees.getFee(), "ListingFee").getFee().getValue();
+			System.out.println("Listing fee is: " + new Double(listingFee2).toString());
+			System.out.println("Listed Item ID: " + item.getItemID());
+
+			// [Step 7] Delete an item.
+			System.out.println("===== [5] Delete item and :;           execute the API call ====");
 
 		} catch (Exception e) {
 			System.out.println("Fail to list the item.");
